@@ -39,7 +39,7 @@
 </div></div>
 <section class="sec sec-tight">
   <div class="wrap">
-    <a class="backlink" href="objects.html">← Все выполненные объекты</a><div class="sys-hero"><div class="sys-photo"><img src="img/obj07.jpg" alt="Производство контактных линз — покрытие Plansher"></div><div class="facts"><div class="frow"><dt>Локация</dt><dd>Дубна</dd></div><div class="frow"><dt>Тип объекта</dt><dd>Склад</dd></div><div class="frow"><dt>Вид работ</dt><dd>Покрытие склада: чистота, пыленепроницаемость, гигиена.</dd></div><div class="frow"><dt>Период работ</dt><dd>октябрь 2025 — август 2026</dd></div><div class="frow"><dt>Фотографий</dt><dd>4</dd></div></div></div><div class="subblock"><h3 class="mini">Все фотографии объекта · 4</h3><div class="ggrid"><figure class="gph"><img src="img/obj07.jpg" alt="Производство контактных линз — фото 1" loading="lazy"></figure><figure class="gph"><img src="img/obj07_s1.jpg" alt="Производство контактных линз — фото 2" loading="lazy"></figure><figure class="gph"><img src="img/obj07_s2.jpg" alt="Производство контактных линз — фото 3" loading="lazy"></figure><figure class="gph"><img src="img/obj07_s3.jpg" alt="Производство контактных линз — фото 4" loading="lazy"></figure></div></div><div class="subblock"><h3 class="mini">Решения Plansher для таких задач</h3><div class="objlinks"><a class="objlink" href="systems-04.html">Система 04 · Наливное покрытие →</a><a class="objlink" href="systems-01.html">Система 01 · Обеспыливающее покрытие →</a></div></div><div class="sysnav subblock"><a href="objects-06.html"><span class="nlabel">← ОБЪЕКТ 06</span><span class="ntitle">Ремонт конструкций</span></a><a class="next" href="objects-08.html"><span class="nlabel">ОБЪЕКТ 08 →</span><span class="ntitle">Танцевальная студия</span></a></div>
+    <a class="backlink" href="objects.html">← Все выполненные объекты</a><div class="sys-hero"><div class="sys-photo"><img src="img/obj07.jpg" alt="Производство контактных линз — покрытие Plansher"></div><div class="facts"><div class="frow"><dt>Локация</dt><dd>Дубна</dd></div><div class="frow"><dt>Тип объекта</dt><dd>Склад</dd></div><div class="frow"><dt>Вид работ</dt><dd>Покрытие склада: чистота, пыленепроницаемость, гигиена.</dd></div><div class="frow"><dt>Период работ</dt><dd>октябрь 2025 — август 2026</dd></div><div class="frow"><dt>Фотографий</dt><dd>4</dd></div></div></div><div class="subblock"><h3 class="mini">Все фотографии объекта · 4</h3><div class="ggrid"><figure class="gph"><img src="img/obj07.jpg" data-full="img/obj07_f1.jpg" alt="Производство контактных линз — фото 1" loading="lazy"></figure><figure class="gph"><img src="img/obj07_s1.jpg" data-full="img/obj07_f2.jpg" alt="Производство контактных линз — фото 2" loading="lazy"></figure><figure class="gph"><img src="img/obj07_s2.jpg" data-full="img/obj07_f3.jpg" alt="Производство контактных линз — фото 3" loading="lazy"></figure><figure class="gph"><img src="img/obj07_s3.jpg" data-full="img/obj07_f4.jpg" alt="Производство контактных линз — фото 4" loading="lazy"></figure></div></div><div class="subblock"><h3 class="mini">Решения Plansher для таких задач</h3><div class="objlinks"><a class="objlink" href="systems-04.html">Система 04 · Наливное покрытие →</a><a class="objlink" href="systems-01.html">Система 01 · Обеспыливающее покрытие →</a></div></div><div class="sysnav subblock"><a href="objects-06.html"><span class="nlabel">← ОБЪЕКТ 06</span><span class="ntitle">Ремонт конструкций</span></a><a class="next" href="objects-08.html"><span class="nlabel">ОБЪЕКТ 08 →</span><span class="ntitle">Танцевальная студия</span></a></div>
     <div style="margin-top:44px"><div class="cta">
 <div>
 <h3>Слой за слоем. Для десятилетий.</h3>
@@ -71,5 +71,57 @@
   </div>
 </footer>
 
+<script>
+(function(){
+  var imgs = document.querySelectorAll('.gph img');
+  if (!imgs.length) return;
+  var items = Array.prototype.map.call(imgs, function(im){
+    return {src: im.getAttribute('data-full') || im.getAttribute('src'), cap: im.getAttribute('alt') || ''};
+  });
+  var lb = document.createElement('div');
+  lb.className = 'lb';
+  lb.innerHTML = '<button class="lb-x" aria-label="Закрыть">×</button>'
+    + '<div class="lb-count"></div>'
+    + '<button class="lb-arrow lb-prev" aria-label="Предыдущее фото">←</button>'
+    + '<figure><img alt=""><figcaption class="lb-cap"></figcaption></figure>'
+    + '<button class="lb-arrow lb-next" aria-label="Следующее фото">→</button>';
+  document.body.appendChild(lb);
+  var im = lb.querySelector('img'), cap = lb.querySelector('.lb-cap'), cnt = lb.querySelector('.lb-count');
+  var cur = 0;
+  function render(){
+    im.src = items[cur].src;
+    cap.textContent = items[cur].cap;
+    cnt.textContent = (cur + 1) + ' / ' + items.length;
+    var a = new Image(); a.src = items[(cur + 1) % items.length].src;
+    var b = new Image(); b.src = items[(cur - 1 + items.length) % items.length].src;
+  }
+  function open(i){ cur = i; render(); lb.classList.add('on'); document.body.style.overflow = 'hidden'; }
+  function close(){ lb.classList.remove('on'); document.body.style.overflow = ''; im.src = ''; }
+  function move(d){ cur = (cur + d + items.length) % items.length; render(); }
+  Array.prototype.forEach.call(imgs, function(g, i){
+    g.closest('figure').addEventListener('click', function(){ open(i); });
+  });
+  lb.querySelector('.lb-x').addEventListener('click', close);
+  lb.querySelector('.lb-prev').addEventListener('click', function(e){ e.stopPropagation(); move(-1); });
+  lb.querySelector('.lb-next').addEventListener('click', function(e){ e.stopPropagation(); move(1); });
+  lb.addEventListener('click', function(e){ if (e.target === lb) close(); });
+  document.addEventListener('keydown', function(e){
+    if (!lb.classList.contains('on')) return;
+    if (e.key === 'Escape') close();
+    if (e.key === 'ArrowLeft') move(-1);
+    if (e.key === 'ArrowRight') move(1);
+  });
+  var tx = null;
+  document.addEventListener('touchstart', function(e){
+    if (lb.classList.contains('on') && e.touches.length === 1) tx = e.touches[0].clientX;
+  }, {passive: true});
+  document.addEventListener('touchend', function(e){
+    if (tx === null || !lb.classList.contains('on')) return;
+    var dx = e.changedTouches[0].clientX - tx;
+    if (Math.abs(dx) > 40) move(dx > 0 ? -1 : 1);
+    tx = null;
+  }, {passive: true});
+})();
+</script>
 </body>
 </html>
